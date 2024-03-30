@@ -154,6 +154,8 @@ namespace SqlFileSplitter
                     }
                 }
 
+                mCurrentOutputWriter.Close();
+
                 Console.WriteLine();
                 OnStatusEvent("Processed {0:N0} lines in the input file", currentLineNumber);
 

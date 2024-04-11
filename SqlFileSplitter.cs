@@ -33,7 +33,7 @@ namespace SqlFileSplitter
             mOptions = options;
         }
 
-        private void CreateNextOutputFile(FileSystemInfo inputFile, string baseOutputFilePath)
+        private void CreateNextOutputFile(FileSystemInfo inputFile, string baseOutputFilePath, bool showFileName = true)
         {
             mCurrentOutputFileNumber++;
 
@@ -44,7 +44,10 @@ namespace SqlFileSplitter
                 mCurrentOutputWriter.Close();
             }
 
-            Console.WriteLine("Writing data to {0}", mCurrentOutputFile.Name);
+            if (showFileName)
+            {
+                Console.WriteLine("Writing data to {0}", mCurrentOutputFile.Name);
+            }
 
             mCurrentOutputWriter = new StreamWriter(new FileStream(mCurrentOutputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.Read));
         }
@@ -75,7 +78,7 @@ namespace SqlFileSplitter
                     inputFile.DirectoryName,
                     Path.GetFileNameWithoutExtension(inputFile.Name) + "_part");
 
-                CreateNextOutputFile(inputFile, baseOutputFilePath);
+                CreateNextOutputFile(inputFile, baseOutputFilePath, false);
                 var currentOutputLineCount = 0;
 
                 Console.WriteLine();
